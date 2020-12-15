@@ -9,3 +9,6 @@ ams_token: secret
 
 # docker image for the cloud info provider
 cloud_info_image: egifedcloud/ops-cloud-info:latest
+
+# site configuration location
+sites_config_dir: sites

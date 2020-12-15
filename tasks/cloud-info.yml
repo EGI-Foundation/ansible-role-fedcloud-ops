@@ -45,7 +45,7 @@
     user: root
     job: >
       flock -n -w 250 /var/lock/cloud-info/{{ filename }} 
-      docker run -v /etc/fedcloud:/etc/fedcloud:ro
+      docker run --rm -v /etc/fedcloud:/etc/fedcloud:ro
       --env-file /etc/fedcloud/cloud-info/{{ filename }}.env
       {{ cloud_info_image }} >> /var/log/cloud-info/{{ filename }}.log 2>&1
     cron_file: "cloud-info-{{ filename }}"
