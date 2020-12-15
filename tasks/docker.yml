@@ -7,6 +7,7 @@
     - gnupg-agent
     - software-properties-common
     state: present
+    update_cache: true
 
 - name: Docker repo key 
   apt_key:
@@ -27,6 +28,11 @@
     - containerd.io
     state: present
     update_cache: yes
+
+- name: kill running stuff if any
+  command: |
+    docker stop $(docker ps -a -q)
+    docker rm -v $(docker ps -a -q)
 
 - name: configure docker
   copy:

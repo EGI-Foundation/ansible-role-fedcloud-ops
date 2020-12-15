@@ -12,24 +12,28 @@
     path: "/etc/fedcloud/vos/{{ item.key }}"
     state: directory
   loop: "{{ vos | dict2items }}"
+  no_log: True
 
-- name: VO auth files
+- name: "VO auth: client id"
   copy:
     content: "{{ item.value.auth.client_id }}"
     dest: "/etc/fedcloud/vos/{{ item.key }}/client_id"
   when: item.value.auth is defined
   loop: "{{ vos | dict2items }}"
+  no_log: True
 
-- name: VO auth files
+- name: "VO auth: client secret"
   copy:
     content: "{{ item.value.auth.client_secret }}"
     dest: "/etc/fedcloud/vos/{{ item.key }}/client_secret"
   when: item.value.auth is defined
   loop: "{{ vos | dict2items }}"
+  no_log: True
 
-- name: VO auth files
+- name: "VO auth: refresh token"
   copy:
     content: "{{ item.value.auth.refresh_token }}"
     dest: "/etc/fedcloud/vos/{{ item.key }}/refresh_token"
   when: item.value.auth is defined
   loop: "{{ vos | dict2items }}"
+  no_log: True

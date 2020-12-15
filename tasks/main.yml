@@ -1,5 +1,5 @@
-#- name: Install docker
-#  include: docker.yml
+- name: Install docker
+  include: docker.yml
 
 - name: load site configuration
   include_vars:
@@ -12,8 +12,8 @@
     sites: "{{ sites|default([]) + [lookup('vars', item)] }}"
   loop: "{{ query('varnames', '^site_incl_vars_(.*)$') }}"
 
-#- name: Handle secrets
-#  include: vo-config.yml
+- name: Handle secrets
+  include: vo-config.yml
 
 - name: Configure cloud-info 
   include: cloud-info.yml
