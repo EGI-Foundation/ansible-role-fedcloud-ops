@@ -6,7 +6,7 @@
     file: "{{ item }}"
     name: "{{ 'site_incl_vars_' ~ item|basename|splitext|first }}"
   with_fileglob:
-  - vars/sites/*.yaml 
+  - "{{ site_config_dir }}/*.yaml"
 
 - set_fact:
     sites: "{{ sites|default([]) + [lookup('vars', item)] }}"
