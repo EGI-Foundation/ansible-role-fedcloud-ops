@@ -3,7 +3,7 @@
 This ansible role configures the catchall operations of several fedcloud
 components.
 
-### Configuration
+## Configuration
 
 The role expects the following variables to be defined:
 
