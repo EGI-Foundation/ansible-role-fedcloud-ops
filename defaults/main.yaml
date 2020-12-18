@@ -1,6 +1,10 @@
 # VOs
 vos:
   sample_vo:
+    auth:
+      client_secret: foo
+      client_id: bar
+      refresh_token: baz
 
 # AMS details
 ams_project: egi_cloud_info
@@ -11,4 +15,7 @@ ams_token: secret
 cloud_info_image: egifedcloud/ops-cloud-info:latest
 
 # site configuration location
-sites_config_dir: sites
+site_config_dir: sites
+
+# No site information as default
+sites:

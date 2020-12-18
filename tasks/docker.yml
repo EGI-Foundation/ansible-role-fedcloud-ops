@@ -29,10 +29,15 @@
     state: present
     update_cache: yes
 
-- name: kill running stuff if any
-  command: |
-    docker stop $(docker ps -a -q)
-    docker rm -v $(docker ps -a -q)
+#- name: kill running stuff if any
+#  shell: |
+#    docker stop $(docker ps -a -q)
+#    docker rm -v $(docker ps -a -q)
+
+- name: ensure docker config dir is present
+  file:
+    path: /etc/docker
+    state: directory
 
 - name: configure docker
   copy:
@@ -47,7 +52,7 @@
         },
         "storage-driver": "overlay2"
       }
-    dest: "/etc/docker/daemon.json"
+    dest: /etc/docker/daemon.json
 
 - name: restart docker
   systemd:

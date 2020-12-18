@@ -5,9 +5,13 @@ driver:
   name: docker
 platforms:
   - name: instance
-    image: docker.io/pycontribs/ubuntu:latest
+    image: pycontribs/ubuntu:latest
     pre_build_image: true
 provisioner:
   name: ansible
+  lint:
+    name: ansible-lint
 verifier:
-  name: ansible
+  name: testinfra
+  lint:
+    name: flake8

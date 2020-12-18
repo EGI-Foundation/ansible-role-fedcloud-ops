@@ -1,5 +1,14 @@
+- name: Ensure cron is available
+  apt:
+    name: cron
+    state: present
+    update_cache: true
+
+
 - name: Install docker
   include: docker.yml
+  # this is only executed if explicity requested
+  tags: ['never', 'docker']
 
 - name: load site configuration
   include_vars:
@@ -12,8 +21,40 @@
     sites: "{{ sites|default([]) + [lookup('vars', item)] }}"
   loop: "{{ query('varnames', '^site_incl_vars_(.*)$') }}"
 
-- name: Handle secrets
-  include: vo-config.yml
+- name: VO configuration
+  block:
+  - file:
+      path: /etc/egi
+      state: directory
+  - file:
+      path: /etc/egi/vos
+      state: directory
+  # Loop over the VO configuration
+  - name: create VO specific files 
+    include_tasks: vo-config.yml
+    loop: "{{ vos | dict2items }}"
+    no_log: True
+
 
 - name: Configure cloud-info 
-  include: cloud-info.yml
+  block:
+  - file:
+      path: /etc/egi
+      state: directory
+  - file:
+      path: /etc/egi/cloud-info
+      state: directory
+  - file:
+      path: /var/lock/cloud-info
+      state: directory
+  - file:
+      path: /var/log/cloud-info
+      state: directory
+  - name: site specific config
+    include_tasks: cloud-info.yml
+    vars:
+      site: "{{ item }}"
+      filename: "{{ item.gocdb }}-{{ item.endpoint | hash('md5') }}"
+    with_items:
+    - "{{ sites }}"
+    when: sites is iterable
