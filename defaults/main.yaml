@@ -18,4 +18,4 @@ cloud_info_image: egifedcloud/ops-cloud-info:latest
 site_config_dir: sites
 
 # No site information as default
-sites:
+sites: []
