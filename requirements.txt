@@ -1,0 +1,4 @@
+molecule
+molecule-docker
+pytest-testinfra
+ansible-lint

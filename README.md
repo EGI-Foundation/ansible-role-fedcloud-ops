@@ -1,66 +1,50 @@
-# Template for EGI repositories.
+# Ansible role for Fedcloud catchall ops
 
-It includes:
+This ansible role configures the catchall operations of several fedcloud
+components.
 
-- License information
-- Copyright and author information
-- Code of conduct and contribution guidelines
-- Templates for PR and issues
-- Code owners file for automatic assignment of PR reviewers
-- [GitHub actions](https://github.com/features/actions) workflows for linting
-  and checking links
+## Configuration
 
-Content is based on:
+The role expects the following variables to be defined:
 
-- [Contributor Covenant](http://contributor-covenant.org)
-- [Semantic Versioning](https://semver.org/)
-- [Chef Cookbook Contributing Guide](https://github.com/chef-cookbooks/community_cookbook_documentation/blob/master/CONTRIBUTING.MD)
+- `vos` a map that contains entry for each VO with the Check-in credentials:
+  ```yaml
+  <vo name>:
+    auth:
+      client_id: <checkin client id>
+      client_secret: <checkin client secret>
+      refresh_token: <checkin refresh token>
+  ```
 
-## Asking for creation of a repository
+- `ams_project`: name of the AMS project to use (default `egi_cloud_info`)
+- `ams_host`: name of the AMS host (default `msg.argo.grnet.gr`)
+- `ams_token`: secret to use to connect to AMS
+- `cloud_info_image`: docker image for the cloud-info-provider
+  (default `egifedcloud/ops-cloud-info:latest`)
+- `site_config_dir`: a directory with yaml files describing each of the
+  sites to configure. Format of files:
 
-It can be done by contacting the
-[administrators](https://github.com/orgs/EGI-Foundation/teams/admins).
+  ```yaml
+  gocdb: <name in gocdb of the site>
+  endpoint: <keystone endpoint of the site>
+  # optionally specify a protocol for the Keystone V3 federation API
+  protocol: openid | oidc (default is openid)
+  vos:
+  # List of VOs defined as follows
+  - name: <vo name>
+    auth:
+      project_id: <project id supporting the VO vo name at the site>
+    # any other optional configuration for cloud-info-provider, e.g:
+    defaultNetwork: private | public | private_only | public_only
+    publicNetwork: <name of the public network>
+  ```
 
-The following information should be provided:
+## Sample playbook
 
-- repository name (lower case, usually not required to mention EGI in the name)
-- repository description (oneliner is enough)
-- optionally additional users that should be able to manage PR and issues
-- optional additional requirements (like disabling Pull Requests for the initial
-  repository population)
+```yaml
+- hosts: server
+  roles:
+  - { role: 'fedcloud-ops' }
+```
 
-If required a private repository can be created but public ones are the default,
-but feel free to ask.
 
-Once all info will have been agreed the repository will be created.
-
-## GitHub repository management rules
-
-All changes should go through Pull Requests.
-
-### Merge management
-
-- Only squash should be enforced in the repository settings.
-- Update commit message for the squashed commits as needed.
-
-### Protection on main branch
-
-To be configured on the repository settings.
-
-- Require pull request reviews before merging
-  - Dismiss stale pull request approvals when new commits are pushed
-  - Require review from Code Owners
-- Require status checks to pass before merging
-  - GitHub actions if available
-  - Other checks as available and relevant
-  - Require branches to be up to date before merging
-- Include administrators
-
-## Access
-
-All access should be managed via
-[GitHub teams](https://github.com/orgs/EGI-Foundation/teams).
-
-- EGI-Foundation/admins: administration right
-- Others participants depending on the requirement: maintain, triage or write or
-  rights

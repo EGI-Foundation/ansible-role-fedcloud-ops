@@ -1,0 +1,27 @@
+---
+- name: VO directory
+  file:
+    path: "/etc/egi/vos/{{ item.key }}"
+    state: directory
+    mode: 0700
+
+- name: "VO auth: client id"
+  copy:
+    content: "{{ item.value.auth.client_id }}"
+    dest: "/etc/egi/vos/{{ item.key }}/client_id"
+    mode: 0600
+  when: item.value.auth is defined
+
+- name: "VO auth: client secret"
+  copy:
+    content: "{{ item.value.auth.client_secret }}"
+    dest: "/etc/egi/vos/{{ item.key }}/client_secret"
+    mode: 0600
+  when: item.value.auth is defined
+
+- name: "VO auth: refresh token"
+  copy:
+    content: "{{ item.value.auth.refresh_token }}"
+    dest: "/etc/egi/vos/{{ item.key }}/refresh_token"
+    mode: 0600
+  when: item.value.auth is defined
