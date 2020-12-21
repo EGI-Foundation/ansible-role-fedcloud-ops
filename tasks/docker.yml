@@ -9,13 +9,13 @@
     state: present
     update_cache: true
 
-- name: Docker repo key 
+- name: Docker repo key
   apt_key:
     id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
     url: https://download.docker.com/linux/ubuntu/gpg
     state: present
 
-- name: Add docker repo 
+- name: Add docker repo
   apt_repository:
     repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
     state: present
@@ -38,6 +38,7 @@
   file:
     path: /etc/docker
     state: directory
+    mode: 0775
 
 - name: configure docker
   copy:
@@ -53,6 +54,7 @@
         "storage-driver": "overlay2"
       }
     dest: /etc/docker/daemon.json
+    mode: 0660
 
 - name: restart docker
   systemd:

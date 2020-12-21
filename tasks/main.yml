@@ -1,3 +1,4 @@
+---
 - name: Ensure cron is available
   apt:
     name: cron
@@ -17,39 +18,52 @@
   with_fileglob:
   - "{{ site_config_dir }}/*.yaml"
 
-- set_fact:
+- name: Set site configuration variable
+  set_fact:
     sites: "{{ sites|default([]) + [lookup('vars', item)] }}"
   loop: "{{ query('varnames', '^site_incl_vars_(.*)$') }}"
 
 - name: VO configuration
   block:
-  - file:
+  - name: Create /etc/egi directory
+    file:
       path: /etc/egi
       state: directory
-  - file:
+      mode: 0755
+  - name: Create /etc/egi/vos directory
+    file:
       path: /etc/egi/vos
       state: directory
+      mode: 0755
   # Loop over the VO configuration
-  - name: create VO specific files 
+  - name: create VO specific files
     include_tasks: vo-config.yml
     loop: "{{ vos | dict2items }}"
     no_log: True
 
 
-- name: Configure cloud-info 
+- name: Configure cloud-info
   block:
-  - file:
+  - name: Create /etc/egi directory
+    file:
       path: /etc/egi
       state: directory
-  - file:
+      mode: 0755
+  - name: Create /etc/egi/cloud-info directory
+    file:
       path: /etc/egi/cloud-info
       state: directory
-  - file:
+      mode: 0755
+  - name: Create /var/lock/cloud-info directory
+    file:
       path: /var/lock/cloud-info
       state: directory
-  - file:
+      mode: 0755
+  - name: Create /var/log/cloud-info directory
+    file:
       path: /var/log/cloud-info
       state: directory
+      mode: 0755
   - name: site specific config
     include_tasks: cloud-info.yml
     vars:

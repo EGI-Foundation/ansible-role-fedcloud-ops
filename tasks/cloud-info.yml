@@ -1,14 +1,15 @@
+---
 - name: cloud-info config directory
   template:
     src: site-info.yaml.j2
     dest: /etc/egi/cloud-info/{{ filename }}.yaml
-    mode: 600
+    mode: 0600
 
-- name: cloud info env 
+- name: cloud info env
   template:
-    src: cloud-info.env.j2 
+    src: cloud-info.env.j2
     dest: /etc/egi/cloud-info/{{ filename }}.env
-    mode: 600
+    mode: 0600
 
 - name: cloud info cron
   cron:
@@ -18,7 +19,7 @@
     hour: "*"
     user: root
     job: >
-      flock -n -w 250 /var/lock/cloud-info/{{ filename }} 
+      flock -n -w 250 /var/lock/cloud-info/{{ filename }}
       docker run --rm -v /etc/egi:/etc/egi:ro
       --env-file /etc/egi/cloud-info/{{ filename }}.env
       {{ cloud_info_image }} >> /var/log/cloud-info/{{ filename }}.log 2>&1

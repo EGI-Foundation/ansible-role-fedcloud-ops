@@ -1,7 +1,7 @@
 galaxy_info:
-  role_name: fedcloud-ops
+  role_name: fedcloud_ops
   author: enol.fernandez@egi.eu
-  description: Fedcloud catchall operations 
+  description: Fedcloud catchall operations
   company: EGI Foundation
   issue_tracker_url: https://github.com/EGI-Foundation/ansible-role-fedcloud-ops/issues
   license: MIT
@@ -11,6 +11,6 @@ galaxy_info:
     versions:
     - all
   galaxy_tags:
-  - egi 
+  - egi
 
 dependencies: []
