@@ -7,16 +7,19 @@
   copy:
     content: "{{ item.value.auth.client_id }}"
     dest: "/etc/egi/vos/{{ item.key }}/client_id"
+    mode: 600
   when: item.value.auth is defined
 
 - name: "VO auth: client secret"
   copy:
     content: "{{ item.value.auth.client_secret }}"
     dest: "/etc/egi/vos/{{ item.key }}/client_secret"
+    mode: 600
   when: item.value.auth is defined
 
 - name: "VO auth: refresh token"
   copy:
     content: "{{ item.value.auth.refresh_token }}"
     dest: "/etc/egi/vos/{{ item.key }}/refresh_token"
+    mode: 600
   when: item.value.auth is defined

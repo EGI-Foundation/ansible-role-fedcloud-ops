@@ -2,11 +2,13 @@
   template:
     src: site-info.yaml.j2
     dest: /etc/egi/cloud-info/{{ filename }}.yaml
+    mode: 600
 
 - name: cloud info env 
   template:
     src: cloud-info.env.j2 
     dest: /etc/egi/cloud-info/{{ filename }}.env
+    mode: 600
 
 - name: cloud info cron
   cron:
