@@ -8,7 +8,7 @@
       vars:
         sites:
         - endpoint: https://example.com:5000/v3/
-          gocdb: foo
+          gocdb: foo.bar
           vos:
           - auth:
               project_id: a123456

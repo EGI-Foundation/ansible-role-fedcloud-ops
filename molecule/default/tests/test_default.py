@@ -15,7 +15,7 @@ def test_vo_files(host):
 
 def test_site_files(host):
     endpoint_hash = hashlib.md5(b"https://example.com:5000/v3/").hexdigest()
-    filename = "foo-%s" % endpoint_hash
+    filename = "foo-bar-%s" % endpoint_hash
     assert host.file("/etc/egi/cloud-info/").is_directory
     assert host.file("/etc/egi/cloud-info/%s.yaml" % filename).exists
     assert host.file("/etc/egi/cloud-info/%s.env" % filename).exists
