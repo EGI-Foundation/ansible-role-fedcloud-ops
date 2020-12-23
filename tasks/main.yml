@@ -5,7 +5,6 @@
     state: present
     update_cache: true
 
-
 - name: Install docker
   include: docker.yml
   # this is only executed if explicity requested
@@ -68,7 +67,7 @@
     include_tasks: cloud-info.yml
     vars:
       site: "{{ item }}"
-      filename: "{{ item.gocdb }}-{{ item.endpoint | hash('md5') }}"
+      filename: "{{ item.gocdb | replace('.', '-') }}-{{ item.endpoint | hash('md5') }}"
     with_items:
     - "{{ sites }}"
     when: sites is iterable
