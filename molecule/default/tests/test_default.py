@@ -4,7 +4,8 @@ import os
 import testinfra.utils.ansible_runner
 
 testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
-    os.environ['MOLECULE_INVENTORY_FILE']).get_hosts('all')
+    os.environ["MOLECULE_INVENTORY_FILE"]
+).get_hosts("all")
 
 
 def test_vo_files(host):
@@ -13,6 +14,7 @@ def test_vo_files(host):
     assert host.file("/etc/egi/vos/sample_vo/client_secret").exists
     assert host.file("/etc/egi/vos/sample_vo/refresh_token").exists
 
+
 def test_site_files(host):
     endpoint_hash = hashlib.md5(b"https://example.com:5000/v3/").hexdigest()
     filename = "foo-bar-%s" % endpoint_hash
@@ -20,7 +22,3 @@ def test_site_files(host):
     assert host.file("/etc/egi/cloud-info/%s.yaml" % filename).exists
     assert host.file("/etc/egi/cloud-info/%s.env" % filename).exists
     assert host.file("/etc/cron.d/cloud-info-%s" % filename).exists
-
-
-    
-
