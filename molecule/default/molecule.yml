@@ -7,7 +7,7 @@ platforms:
   - name: instance
     image: pycontribs/ubuntu:latest
     pre_build_image: true
-lint: ansible-lint
+lint: ansible-lint --exclude .github/
 provisioner:
   name: ansible
   lint:

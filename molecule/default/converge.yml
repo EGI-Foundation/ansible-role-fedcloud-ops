@@ -7,12 +7,12 @@
         name: "ansible-role-fedcloud-ops"
       vars:
         sites:
-        - endpoint: https://example.com:5000/v3/
-          gocdb: foo.bar
-          vos:
-          - auth:
-              project_id: a123456
-            name: sample_vo
-          - auth:
-              project_id: b987659
-            name: vo.example.com
+          - endpoint: https://example.com:5000/v3/
+            gocdb: foo.bar
+            vos:
+              - auth:
+                  project_id: a123456
+                name: sample_vo
+              - auth:
+                  project_id: b987659
+                name: vo.example.com
